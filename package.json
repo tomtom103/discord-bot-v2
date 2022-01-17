@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start src/index.js --name \"discord-bot-v2\"",
+    "dev": "pm2 start src/index --name \"discord-bot-v2\" --watch",
+    "preinstall": "npm install -g pm2"
   },
   "author": "",
   "license": "ISC",
