@@ -14,35 +14,35 @@ class Logger {
         ) : null;
     }
 
-    info(Text) {
+    info(text) {
         let d = new Date();
         process.env.NODE_ENV === 'production' ? 
             this.logger.log({
                 level: "info",
                 message:
-                    `${d.getHours()}:${d.getMinutes()} - ${d.getDate()}:${d.getMonth() + 1}:${d.getFullYear()} | Info: ` + Text,
+                    `${d.getHours()}:${d.getMinutes()} - ${d.getDate()}:${d.getMonth() + 1}:${d.getFullYear()} | Info: ` + text,
             }) 
             : null;
         console.log(
             colors.green(
                 `${d.getDate()}:${d.getMonth() + 1}:${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`
-            ) + colors.yellow(" | Info: " + Text)
+            ) + colors.yellow(" | Info: " + text)
         );
     }
 
-    error(Text) {
+    error(text) {
         let d = new Date();
         process.env.NODE_ENV === 'production' ? 
             this.logger.error({
                 level: "error",
                 message:
-                    `${d.getHours()}:${d.getMinutes()} - ${d.getDate()}:${d.getMonth() + 1}:${d.getFullYear()} | Error: ` + Text,
+                    `${d.getHours()}:${d.getMinutes()} - ${d.getDate()}:${d.getMonth() + 1}:${d.getFullYear()} | Error: ` + text,
             }) 
             : null;
         console.log(
             colors.red(
                 `${d.getDate()}:${d.getMonth() + 1}:${d.getFullYear()} - ${d.getHours()}:${d.getMinutes()}`
-            ) + colors.red(" | Error: " + Text)
+            ) + colors.red(" | Error: " + text)
         );
     }
 }

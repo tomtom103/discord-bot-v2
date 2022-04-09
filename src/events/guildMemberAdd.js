@@ -1,22 +1,22 @@
-const { defaultSettings } = require('../per-server');
+const { serverName } = require('../../config.json');
 
 module.exports = {
 	name: 'guildMemberAdd',
 	/**
-	 * When the bot leaves or is kicked, delete settings to prevent stale entries
+	 * Function will be executed whenever a new user joins the server.
 	 * @param {import('discord.js').GuildMember} member 
 	 */
 	execute(member) {
-		
-        defaultSettings.ensure(member.guild.id, defaultSettings);
+        // This message can be customized to your liking :)
+        const welcomeMessage = `Bienvenue dans le serveur de ${serverName} !\n\n` + 
+            "Pour que nous puissions vous attribuer vos permissions dans le serveur Discord " +
+            "veuillez utiliser le format suivant pour votre pseudo: \n" +            
+            "Prénom Nom - XYZ \n" +
+            "où XYZ est votre numéro d'équipe (lorsqu'il vous aura été attribué) \n" +
+            "Exemple : Nikolay Radoev - 101";
 
-        let welcomeMessage = client.settings.get(member.guild.id, "welcomeMessage");
-
-        welcomeMessage = welcomeMessage.replace("{{user}}", member.user.tag);
-
-        member.guild.channels.cache
-            .find(channel => channel.name === client.settings.get(member.guild.id, "welcomeChannel"))
+        member
             .send(welcomeMessage)
-            .catch(console.error)
+            .catch(console.error);
 	},
 };

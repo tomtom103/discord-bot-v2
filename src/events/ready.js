@@ -1,5 +1,3 @@
-
-
 module.exports = {
     name: 'ready',
     once: true,
@@ -9,9 +7,5 @@ module.exports = {
      */
     execute(client) {
         console.log(`Ready! Logged in as ${client.user.tag}`);
-        const allActiveGuilds = client.guilds;
-        allActiveGuilds.cache.forEach((guild) => {
-            
-        })
     }
 }
