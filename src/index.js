@@ -7,7 +7,7 @@ const path = require('path');
 
 const { discordToken } = require('../config.json');
 
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, Collection } = require('discord.js');
 
 const client = new Client({
     intents: [
@@ -16,6 +16,7 @@ const client = new Client({
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
         Intents.FLAGS.GUILD_VOICE_STATES,
         Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.DIRECT_MESSAGES,
     ]
 });
 
@@ -28,9 +29,9 @@ const client = new Client({
     eventFiles.forEach((file) => {
         const event = require(path.join(__dirname, `events/${file}`));
         if (event.once) {
-            client.once(event.name, (...args) => event.execute(...args));
+            client.once(event.name, (...args) => event.execute(client, ...args));
         } else {
-            client.on(event.name, (...args) => event.execute(...args));
+            client.on(event.name, (...args) => event.execute(client, ...args));
         }
     });
 })();
