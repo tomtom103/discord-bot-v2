@@ -1,0 +1,14 @@
+{
+    "discordToken": "",
+    "serverName": "",
+    "commandPrefix": "!",
+    "allowedBotChannelNames": [
+        
+    ],
+    "adminUserNames": [
+        "thom#3270"
+    ],
+    "adminRoleIds": [
+
+    ]
+}

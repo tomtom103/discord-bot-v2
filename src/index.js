@@ -7,7 +7,7 @@ const path = require('path');
 
 const { discordToken } = require('../config.json');
 
-const { Collection, Client, Intents } = require('discord.js');
+const { Client, Intents } = require('discord.js');
 
 const client = new Client({
     intents: [
@@ -18,11 +18,6 @@ const client = new Client({
         Intents.FLAGS.GUILD_MEMBERS,
     ]
 });
-
-/**
- * Attach commands and settings to client
- */
-client.commands = new Collection();
 
 /**
  * Register all events
