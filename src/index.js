@@ -4,6 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const Enmap = require("enmap");
 
 const { discordToken } = require('../config.json');
 
@@ -35,5 +36,23 @@ const client = new Client({
         }
     });
 })();
+
+const defaultSettings = {
+    prefix: "!",
+    serverName: '',
+    allowedBotChannelIds: [],
+    adminUserNames: [],
+    adminRoleIds: [],
+    sessionStarted: false,
+    currentLabGroup: null,
+};
+
+client.settings = new Enmap({
+    name: "settings",
+    cloneLevel: 'deep',
+    fetchAll: false,
+    autoFetch: true,
+    autoEnsure: defaultSettings,
+});
 
 client.login(discordToken);

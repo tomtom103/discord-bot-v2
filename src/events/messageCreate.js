@@ -25,7 +25,7 @@ module.exports = {
      * @param {import('discord.js').Message<boolean>} message 
      */
     execute(_client, message) {
-        const commandPrefix = _client.settings.get(message.guild.id, "commandPrefix") || '!';
+        const commandPrefix = _client.settings.get(message.guild.id, "prefix") || '!';
         // We don't want to capture non-commands or bot messages
         if(!message.content?.startsWith(commandPrefix) || message.author.bot) return;
 

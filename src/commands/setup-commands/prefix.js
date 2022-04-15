@@ -6,7 +6,7 @@ module.exports = {
      * @param {import('discord.js').Message<boolean>} message 
      */
     execute(client, message) {
-        const serverName = message.content.split(" ").slice(1).join(" ");
-        client.settings.set(message.guild.id, serverName);
+        const prefix = message.content.split(" ")[1];
+        client.settings.set(message.guild.id, prefix, "prefix");
     },
 };

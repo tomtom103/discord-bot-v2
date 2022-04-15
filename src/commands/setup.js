@@ -6,7 +6,6 @@
  * Settings will be persisted
  */
 
-const Enmap = require("enmap");
 const { Collection } = require('discord.js');
 const {
     configurationMessageEmbed,
@@ -22,11 +21,11 @@ const setupCommands = new Collection();
 // Registering commands
 callOnce(() => {
     const setupCommandFiles = fs.readdirSync(path.join(__dirname, './setup-commands')).filter(file => file.endsWith('.js'));
-
+    console.log(setupCommandFiles)
     setupCommandFiles.forEach((file) => {
         const command = require(path.join(__dirname, `./setup-commands/${file}`));
         setupCommands.set(command.name, command);
-    })
+    });
 })();
 
 /**
@@ -47,20 +46,21 @@ const sendMessageAndWaitForResponse = (client, message) => {
             errors: ['time']
         }
     ).then((collected) => {
-        for (let msg of collected.values()) {
-            if(!msg.content?.startsWith(commandPrefix)) {
-                const args = message.content.substring(1).split(" ");
-                const command = setupCommands.get(args.shift().toLowerCase());
+        const latestMessage = collected.first();
+        if (latestMessage.content?.startsWith(commandPrefix)) {
+            const args = latestMessage.content.substring(1).split(" ");
+            console.log(args);
+            const command = setupCommands.get(args.shift().toLowerCase());
+            console.log(args);
+            if (!command) return;
 
-                if (!command) continue;
+            command.execute(client, latestMessage, args);
 
-                command.execute(client, msg, args);
-            }
+            message.channel.send({ embeds: [currentConfigurationMessageEmbed(client, message)] }).then(() => {
+                sendMessageAndWaitForResponse(client, message);
+            });
         }
-        // Stackoverflow maybe?
-        message.channel.send({ embeds: [currentConfigurationMessageEmbed(client, message)] }).then((msg) => {
-            sendMessageAndWaitForResponse(client, msg);
-        });
+        
     }).catch(
         (_collected) => {
             message.channel.send("Configuration terminee!")
@@ -77,29 +77,12 @@ module.exports = {
      * @param {import('discord.js').Message<boolean>} message 
      */
     execute(client, message) {
-        const defaultSettings = {
-            prefix: "!",
-            serverName: message.guild.name || '',
-            allowedBotChannelIds: [],
-            adminUserNames: [],
-            adminRoleIds: [],
-            sessionStarted: false,
-            currentLabGroup: null,
-        };
-
-        client.settings = new Enmap({
-            name: "serverSettings",
-            cloneLevel: 'deep',
-            fetchAll: false,
-            autoensure: defaultSettings,
-        });
-
         message.channel.send({ embeds: [
             configurationMessageEmbed(client, message), 
             currentConfigurationMessageEmbed(client, message)
-        ]}).then((msg) => {
+        ]}).then(() => {
             // Start waiting for next message (nested logic)
-            sendMessageAndWaitForResponse(client, msg);
+            sendMessageAndWaitForResponse(client, message);
         });
     }
 }

@@ -6,11 +6,11 @@ module.exports = {
      * @param {import('discord.js').Message<boolean>} message 
      */
     execute(client, message) {
-        const adminRoleIds = client.settings.get(message.guild.id, 'adminRoleIds') || [];
-        for(let role of message.mentions.roles.values()) {
-            adminRoleIds.push(role.id);
+        const allowedBotChannelIds = client.settings.get(message.guild.id, 'allowedBotChannelIds') || [];
+        for(let channel of message.mentions.channels.values()) {
+            allowedBotChannelIds.push(channel.id);
         }
 
-        client.settings.set(message.guild.id, adminRoleIds, 'adminRoleIds')
+        client.settings.set(message.guild.id, allowedBotChannelIds, 'allowedBotChannelIds')
     },
 };

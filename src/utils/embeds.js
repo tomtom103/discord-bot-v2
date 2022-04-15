@@ -28,10 +28,10 @@ exports.configurationMessageEmbed = (client, message) => {
  * @returns {import('discord.js').MessageEmbed}
  */
 exports.currentConfigurationMessageEmbed = (client, message) => {
-    const currentGuildId = message.guild.id;
+    const guildId = message.guild.id;
 
-    const serverName = client.settings.get(currentGuildId, "serverName") || '';
-    const commandPrefix = client.settings.get(currentGuildId, "prefix") || '!';
+    const serverName = client.settings.get(guildId, "serverName") || 'MyServer';
+    const commandPrefix = client.settings.get(guildId, "prefix") || '!';
     const adminRoleIds = client.settings.get(guildId, "adminRoleIds");
     const adminUserNames = client.settings.get(guildId, "adminUserNames");
     const allowedBotChannelIds = client.settings.get(guildId, "allowedBotChannelIds");

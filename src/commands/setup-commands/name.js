@@ -7,6 +7,7 @@ module.exports = {
      */
     execute(client, message) {
         const serverName = message.content.split(" ").slice(1).join(" ");
-        client.settings.set(message.guild.id, serverName);
+        console.log(serverName)
+        client.settings.set(message.guild.id, serverName, "serverName");
     },
 };
