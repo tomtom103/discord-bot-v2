@@ -1,4 +1,4 @@
-function callOnce(fn, context) {
+exports.callOnce = (fn, context) => {
     let result;
     return function() {
         if (fn) {
@@ -7,8 +7,4 @@ function callOnce(fn, context) {
         }
         return result;
     }
-}
-
-module.exports = {
-    callOnce
 }

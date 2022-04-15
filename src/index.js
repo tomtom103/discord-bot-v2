@@ -7,7 +7,7 @@ const path = require('path');
 
 const { discordToken } = require('../config.json');
 
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents } = require('discord.js');
 
 const client = new Client({
     intents: [

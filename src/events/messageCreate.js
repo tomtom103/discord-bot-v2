@@ -1,9 +1,7 @@
 const { Collection } = require('discord.js');
 
-const { commandPrefix } = require('../../config.json');
-const { hasAdminPermissions } = require('../utils/index');
 const { logger } = require('../utils/logger');
-const { callOnce } = require('../utils/callOnce');
+const { callOnce } = require('../utils/index');
 
 const fs = require('fs');
 const path = require('path');
@@ -27,6 +25,8 @@ module.exports = {
      * @param {import('discord.js').Message<boolean>} message 
      */
     execute(_client, message) {
+        const commandPrefix = _client.settings.get(message.guild.id, "commandPrefix") || '!';
+        // We don't want to capture non-commands or bot messages
         if(!message.content?.startsWith(commandPrefix) || message.author.bot) return;
 
         logger.info(`User ${message.author.username} wrote: ${message.content}`);
